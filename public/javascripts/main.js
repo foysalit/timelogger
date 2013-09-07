@@ -1,4 +1,6 @@
 $(function(){
+	var SOCKET = io.connect('http://localhost');
+
 	$('.datepicker').pickadate();
 
 	var from_$input = $('.timepicker.from').pickatime(),
@@ -57,10 +59,15 @@ $(function(){
 
 		insert.done(function(ret){
 			console.log(ret);
+			SOCKET.emit('logged', form_data);
 		});
 
 		insert.fail(function(){
 			alert('OMFG! the ajax has fallen. the world is gonna end!');
 		});
+	});
+
+	SOCKET.on('logged', function(data){
+		console.log([data, 'yay logged!']);
 	});
 });

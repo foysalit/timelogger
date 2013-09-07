@@ -10,7 +10,9 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
-var app = express();
+var app = express(),
+	server = http.createServer(app),
+	io = require('socket.io').listen(server);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -39,6 +41,15 @@ app.post('/api/log/:port', function(req, res){
 	});
 });	
 
-http.createServer(app).listen(app.get('port'), function(){
+server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
+});
+
+
+io.sockets.on('connection', function(socket){
+	console.log(['yay! sockets', socket]);
+
+	socket.on('logged', function(data){
+		console.log(data);
+	});
 });
