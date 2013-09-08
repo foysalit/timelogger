@@ -1,0 +1,71 @@
+<head>
+	<title>Log Your Time.</title>
+</head>
+
+<body>
+	<div class="row" id="top">
+		<div class="container">
+			<div class="col-md-4">
+				<a class="logo" href="/">{LOGGY}</a>
+			</div>
+		</div>
+	</div>
+
+	<div id="content" class="row">
+		<div class="container">
+			<div class="col-md-6">
+				{{> TimeInput}}
+			</div>
+		</div>
+		<div class="container">
+			<div class="col-md-6">
+				{{> LogTable}}
+			</div>
+		</div>
+	</div>
+</body>
+
+<template name="TimeInput">
+	<select name="project" id="select_project">
+		<option>Projects</option>
+		{{#each projects}}
+			<option value="{{name}}">{{name}}</option>
+		{{/each}}
+	</select>
+
+	<input type="text" name="hours" id="input_hours">
+	<input type="submit" id="log_time" value="Log It In">
+</template>
+
+<template name="LogTable">
+	<div class="row">
+		{{#if user}}
+			<button class="btn btn-primary show-all-users">All</button>
+		{{/if}}
+
+		<select name="project" class="select_project">
+			<option value="">Projects</option>
+			{{#each projects}}
+				<option value="{{name}}">{{name}}</option>
+			{{/each}}
+		</select>
+	</div>
+	<table class="log-table table table-striped">
+		<thead>
+			<th>Username</th>
+			<th>Project</th>
+			<th>Hours</th>
+		</thead>
+		<tbody>
+			{{#each logs}}
+				<tr>
+					<td class="username">
+						{{ username }}
+					</td>
+					<td>{{ project }}</td>
+					<td>{{ hours }}</td>
+				</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</template>

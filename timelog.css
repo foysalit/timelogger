@@ -1,0 +1,11 @@
+/* CSS declarations go here */
+#top{
+	padding: 25px 0;
+	-webkit-box-shadow: 0 2px 4px -1px #ebebeb;
+	        box-shadow: 0 2px 4px -1px #ebebeb;
+}
+.logo{
+	font-size: 35px;
+	font-weight: bold;
+	text-decoration: none !important;
+}
