@@ -1,16 +1,25 @@
 extends layout
 
 block content
-	h1= title
-	p Welcome to #{title}
-
-	form#insert_log_form
-		select(name='project')
-			for project in projects
-				option(value= project.name) #{project.name}
-
-		input(type='text', name="date", class='datepicker')
-		input(type='text', name="from", class='timepicker from')
-		input(type='text', name="to", class='timepicker to')
-		input(type='hidden', name='username', value='foysal')
-		input(type='submit', value='Submit')
+	div#home
+		div.dashboard
+			if logs.status === true
+				div.log-table
+					div.log-table-headers.group
+						div User
+						div Project
+						div From
+						div To 
+						div Date
+					each log in logs.logs
+						div.log-item.group
+							div.username
+								= log.username
+							div.project
+								= log.project
+							div.from
+								= log.from
+							div.to
+								= log.to
+							div.date
+								= log.date

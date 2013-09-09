@@ -4,6 +4,24 @@ var Server = require('mongodb').Server;
 var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
+var Projects = [
+		{id: 1, name: 'eventsitalia'},
+		{id: 2, name: 'gestliste'},
+		{id: 3, name: 'auronia'},
+		{id: 4, name: 'viasat'},
+		{id: 5, name: 'console'}
+	],
+	Users = [
+		{username: 'alessandro', name: 'Alessandro Rovito'},
+		{username: 'alessio', name: 'Alessio Ribero'},
+		{username: 'diego', name: 'Diego Allegra'},
+		{username: 'foysal', name: 'Foysal Ahamed'},
+		{username: 'luigi', name: 'Luigi Leuce'},
+		{username: 'paolo', name: 'Paolo Errico'},
+		{username: 'riccardo', name: 'Riccardo D\'uggento'},
+		{username: 'ugo', name: 'Ugo Reynaldi'}
+	];
+
 Model = {
 	db : new Db('timelogger', new Server('localhost', 27017, {auto_reconnect: true}, {})),
 	init : function(){
@@ -21,11 +39,10 @@ Model = {
 	insertLog: function(data, callback){
 		this.getCollection(function(err, collection){
 			if (err) {
-				callback({status: false});
+				callback({status: false, error: err});
 			}else{
 				collection.insert(data, { safe: true }, function(err, entry){
-					console.log(entry);
-					callback({status: true});
+					callback({status: true, entry: entry});
 				});
 			}
 		});
@@ -48,14 +65,6 @@ Model = {
 						callback({status: true, logs: docs});
 					}
 				});
-
-				logs.each(function(err, doc){
-					if(!err){
-						var from = new Date(doc.date+ ' ' +doc.from).getHours();
-						var to = new Date(doc.date+ ' ' +doc.to).getHours();
-						console.log([from, to, doc.from, doc.to]);
-					}
-				});
 			}
 		});
 	}
@@ -71,9 +80,9 @@ exports.read_by_username = function (req, res) {
 	Model.getLog({username: req.params.username}, function(ret){
 		var data = {
 			title: 'Logs of User - '+ req.params.username,
-			log_data: ret
+			logs: ret
 		};
-		res.render('logs', data);
+		res.render('index', data);
 	});
 };
 
@@ -82,8 +91,29 @@ exports.read_by_project = function (req, res) {
 	Model.getLog({project: req.params.project}, function(ret){
 		var data = {
 			title: 'Logs of Project - '+ req.params.project,
-			log_data: ret
+			logs: ret
 		};
-		res.render('logs', data);
+		res.render('index', data);
+	});
+};
+
+exports.read_all = function (req, res) {
+	Model.getLog({project: req.params.project}, function(ret){
+		var data = {
+			title: 'Logs of Project - '+ req.params.project,
+			logs: ret
+		};
+		console.log(ret);
+		res.render('index', data);
+	});
+};
+
+exports.logger = function (req, res){
+	res.render('logger', { title: 'Loggity Log!', projects: Projects, users: Users });
+};
+
+exports.index = function (req, res){
+	Model.getLog(null, function(ret){
+		res.render('index', { title: 'Loggity Log!', logs: ret });
 	});
 };

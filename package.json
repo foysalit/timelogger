@@ -9,6 +9,8 @@
     "express": "3.2.6",
     "jade": "*",
     "mongodb": ">= 0.9.6-7",
-    "socket.io": ">=0.9"
+    "socket.io": ">=0.9",
+    "moment": ">=2.1.0",
+    "passport": ">=0.1"
   }
 }

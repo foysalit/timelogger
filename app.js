@@ -5,8 +5,8 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
   , log = require('./routes/api/log')
+  , moment = require('moment')
   , http = require('http')
   , path = require('path');
 
@@ -30,14 +30,18 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/users', user.list);
+/*
+ * all the routes regarding the logs
+ * api, get, post all kinds of log routes
+ */
+app.get('/', log.index)
+app.get('/log', log.logger);
 app.get('/logs/user/:username', log.read_by_username);
 app.get('/logs/project/:project', log.read_by_project);
 
 app.post('/api/log/:port', function(req, res){
 	log[req.params.port](req, function(ret){
-		res.send(ret);
+		res.json(ret);
 	});
 });	
 
@@ -47,9 +51,8 @@ server.listen(app.get('port'), function(){
 
 
 io.sockets.on('connection', function(socket){
-	console.log(['yay! sockets', socket]);
-
 	socket.on('logged', function(data){
 		console.log(data);
+		socket.broadcast.emit('user_logged_time', data[0]);
 	});
 });
