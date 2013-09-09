@@ -1,5 +1,17 @@
 $(function(){
 	var SOCKET = io.connect('http://localhost');
+	var log_row	= '<div class="log-item group"><div class="username">{[]}</div><div class="project">{[]}</div><div class="from">{[]}</div><div class="to">{[]}</div><div class="date">{[]}</div></div>';
+
+	$('select[name="username"]').dropdown({
+		gutter : 5,
+		delay : 100,
+		random : true
+	});
+	$('select[name="project"]').dropdown({
+		gutter : 5,
+		delay : 100,
+		random : true
+	});
 
 	if($('.logger-page').length > 0){
 		var date_input = $('.datepicker').pickadate(),
@@ -48,7 +60,11 @@ $(function(){
 
 		var insert_log_form = $('#insert_log_form');
 
-		insert_log_form.on('click', 'input[type="submit"]', function(e){
+		insert_log_form.on('submit', function(){
+			return false;
+		});
+
+		insert_log_form.on('click', '.btn-primary', function(e){
 			e.preventDefault();
 
 			var day = date_picker.get('value'),
@@ -84,7 +100,7 @@ $(function(){
 	SOCKET.on('user_logged_time', function(data){
 		if($('.dashboard').length > 0){
 			$('.dashboard')
-				.append(data.username+ 'just logged '+ data.hours +' hours');
+				.append(data.username+ ' just logged '+ data.hours +' hours');
 			console.log(data);
 		}
 	});

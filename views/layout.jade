@@ -3,18 +3,24 @@ html
 	head
 		title= title
 		link(rel='stylesheet', href='/stylesheets/pickadate.css')
+		link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Bitter:400,700,400italic')
+		link(rel='stylesheet' href="http://netdna.bootstrapcdn.com/font-awesome/3.2.0/css/font-awesome.css")
 		link(rel='stylesheet', href='/stylesheets/style.css')
-	body
-		div.full#top
-			h1
-				Loggy
-
-		block content
 
 		script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js")
 		script(src="/socket.io/socket.io.js")
 		script(src="/javascripts/plugins/picker.all.js")
 		script(src="/javascripts/plugins/picker.date.js")
 		script(src="/javascripts/plugins/picker.time.js")
+		script(src="/javascripts/plugins/dropdown.js")
 		script(src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js")
+
+
+	body
+		div.full#top
+			h1 
+				a(href="/") Oh Yeah! Log It!
+
+		block content
+
 		script(src="/javascripts/main.js")

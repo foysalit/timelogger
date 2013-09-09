@@ -82,7 +82,7 @@ exports.read_by_username = function (req, res) {
 			title: 'Logs of User - '+ req.params.username,
 			logs: ret
 		};
-		res.render('index', data);
+		res.render('logs/index', data);
 	});
 };
 
@@ -93,7 +93,7 @@ exports.read_by_project = function (req, res) {
 			title: 'Logs of Project - '+ req.params.project,
 			logs: ret
 		};
-		res.render('index', data);
+		res.render('logs/index', data);
 	});
 };
 
@@ -104,16 +104,18 @@ exports.read_all = function (req, res) {
 			logs: ret
 		};
 		console.log(ret);
-		res.render('index', data);
+		res.render('logs/index', data);
 	});
 };
 
 exports.logger = function (req, res){
-	res.render('logger', { title: 'Loggity Log!', projects: Projects, users: Users });
+	res.render('logs/logger', { title: 'Loggity Log!', projects: Projects, users: Users });
 };
 
 exports.index = function (req, res){
 	Model.getLog(null, function(ret){
-		res.render('index', { title: 'Loggity Log!', logs: ret });
+		res.render('logs/index', { title: 'Loggity Log!', logs: ret });
 	});
 };
+
+exports.Model = Model;

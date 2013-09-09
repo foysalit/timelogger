@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+	div#logs_home.full
+		if logs.status === true
+			div.log-table.main.group
+				div.log-table-headers.group
+					div.date Date
+					div.username User
+					div.project Project
+					div.from From
+					div.to To 
+					div.hours Total
+				each log in logs.logs
+					div.log-item.group
+						div.date
+							= log.date
+						div.username
+							a(href= '/logs/user/' + log.username) #{log.username}
+						div.project
+							a(href= '/logs/project/' +log.project) #{log.project}
+						div.from
+							= log.from
+						div.to
+							= log.to
+						div.hours
+							= log.hours
+							|  Hours

@@ -1,9 +1,11 @@
-
 /*
  * GET home page.
  */
+var log = require('./api/log');
 
 exports.index = function(req, res){
-	
-	res.render('index', { title: 'Loggity Log!'});
+	log.Model.getLog(null, function(ret){
+		console.log(ret.logs);
+	});
+	res.render('index', { title: 'Dashboard'});
 };

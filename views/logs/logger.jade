@@ -1,0 +1,30 @@
+extends layout
+
+block content
+	div.logger-page.full
+		form#insert_log_form.main.log-form
+			div.half.left
+				select(name='username')
+					option(value='-1', selected) User
+					for user in users
+						option(value= user.username, class='icon-user') #{user.name}
+
+			div.half.right
+				select(name='project')
+					option(value='-1', selected) Project
+					for project in projects
+						option(value= project.name, class='icon-briefcase') #{project.name}
+
+			div.inp-row.group
+				input(type='text', name="date", class='datepicker', placeholder="Date")
+
+			div.inp-row.group
+				input(type='text', name="from", class='timepicker from', placeholder="From")
+
+			div.inp-row.group
+				input(type='text', name="to", class='timepicker to', placeholder="To")
+
+			div.inp-row.group
+				button(type='submit', value='Submit' class="btn-primary")
+					i.icon-save
+					| Log

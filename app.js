@@ -30,11 +30,13 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+app.get('/', routes.index);
+
 /*
  * all the routes regarding the logs
  * api, get, post all kinds of log routes
  */
-app.get('/', log.index)
+app.get('/logs', log.index)
 app.get('/log', log.logger);
 app.get('/logs/user/:username', log.read_by_username);
 app.get('/logs/project/:project', log.read_by_project);
