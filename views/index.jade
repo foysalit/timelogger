@@ -2,4 +2,6 @@ extends layout
 
 block content
 	div#home
-		
+		each user_log in data.user_data
+			div.hours
+				= user_log.getHoursByProject()

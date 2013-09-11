@@ -119,3 +119,5 @@ exports.index = function (req, res){
 };
 
 exports.Model = Model;
+exports.Projects = Projects;
+exports.Users = Users;
