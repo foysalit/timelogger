@@ -54,11 +54,13 @@ a{
 }
 
 .full{
+	position: relative;
 	width: 100%;
 	padding: 0;
 	margin: 0;
 }
 .main{
+	position: relative;
 	width: 70%;
 	padding: 0;
 	margin: 0 auto;
@@ -114,6 +116,40 @@ input[type="text"]{
 	color: #4d8c9d;
 }
 
+.notifications{
+	position: fixed;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 15%;
+	z-index: 999;
+	-webkit-transition: 0.2s all linear;
+	   -moz-transition: 0.2s all linear;
+	    -ms-transition: 0.2s all linear;
+	     -o-transition: 0.2s all linear;
+	        transition: 0.2s all linear;
+}
+.notification-item{
+	position: relative;
+	width: 90%;
+	margin: 20px auto;
+	padding: 15px 5% 10px 3%;
+	font-size: 15px;
+	line-height: 25px;
+	background: #ffffff;
+	-webkit-box-shadow: 0 0 4px -1px #cccccc;
+	        box-shadow: 0 0 4px -1px #cccccc;
+}
+.notifications a, .notifications i{
+	color: #4d8c9d;
+	cursor: pointer;
+}
+.notifications .icon-remove{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
 #top h1{
 	text-align: center;
 	color: #4d8c9d;
@@ -123,11 +159,20 @@ input[type="text"]{
 }
 
 .log-form{
-	width: 55%;
-	margin-top: 50px;
+	width: 80%;
+	margin: 50px auto 25px;
 }
 .log-form input[type="text"]{
 	width: 65%;
+}
+.form-submission-message{
+	text-align: center;
+}
+.form-submission-message.success{
+	color: #00d187;
+}
+.error{
+	color: #a80a21;
 }
 
 .log-table-headers > div,

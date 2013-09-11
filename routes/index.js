@@ -10,9 +10,16 @@ exports.index = function(req, res){
 
 		for(user in log.Users){
 			var this_user = log.Users[user];
-			user_logs[user.username] = new User(this_user.username, ret.logs);
+			user_logs.push(new User(this_user.username, ret.logs));
 		}
-		res.render('index', { title: 'Dashboard', data: {user_data: user_logs}});
+
+		var data = {
+				title: 'Dashboard',
+				user_data: user_logs,
+				projects: log.Projects
+			};
+
+		res.render('index', data);
 
 	});
 };
@@ -23,15 +30,14 @@ var User = function(username, logs){
 	var self = this;
 
 	this.getHoursByProject = function(project){
-		var matches = [];
+		var total = 0;
 
 		this.logs.map(function(log){
 			if((self.username === log.username) && (project === log.project)){
-				matches.push(log);
+				total += parseFloat(parseFloat(log.hours).toFixed(1));
 			}
 		});
-
-		return matches;
+		return total;
 	};
 
 };

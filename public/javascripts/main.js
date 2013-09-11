@@ -58,7 +58,8 @@ $(function(){
 		});
 
 
-		var insert_log_form = $('#insert_log_form');
+		var insert_log_form = $('#insert_log_form'),
+			insert_log_form_message_container = insert_log_form.next('.form-submission-message');
 
 		insert_log_form.on('submit', function(){
 			return false;
@@ -85,8 +86,16 @@ $(function(){
 
 			insert.done(function(ret){
 				if(ret.status === true){
+					insert_log_form_message_container
+						.removeClass('error')
+                        .addClass('success')
+                        .html('Done! To add more just edit the data and submit again.');
 					SOCKET.emit('logged', ret.entry);
 				}else{
+                    insert_log_form_message_container
+                        .removeClass('success')
+                        .addClass('error')
+                        .html('Error occured :(');
 					SOCKET.emit('error', ret.error);
 				}
 			});
@@ -97,11 +106,32 @@ $(function(){
 		});
 	}
 
+
+    var notifications = $('.notifications');
+    notifications.on('click', '.icon-remove', function(e){
+        $(this).closest('.notification-item').fadeOut('slow', function() {
+            $(this).remove();
+        });
+    });
+
 	SOCKET.on('user_logged_time', function(data){
-		if($('.dashboard').length > 0){
-			$('.dashboard')
-				.append(data.username+ ' just logged '+ data.hours +' hours');
-			console.log(data);
+		if(notifications.length > 0){
+            var notification = '<div class="notification-item">'+
+                    '<i class="icon-remove"></i>'+
+                    '<a href="/logs/user/'+ data.username +'">'+
+                    data.username +
+                    '</a>'+
+                    ' just logged ' +
+                    data.hours +
+                    ' hours' +
+                    ' on project: ' +
+                    '<a href="/logs/project/'+ data.project +'">'+
+                    data.project+
+                    '</a>';
+
+			notifications.append(notification);
+
+			console.log(data, notification);
 		}
 	});
 });

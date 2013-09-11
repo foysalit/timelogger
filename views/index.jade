@@ -2,6 +2,16 @@ extends layout
 
 block content
 	div#home
-		each user_log in data.user_data
-			div.hours
-				= user_log.getHoursByProject()
+		if(user_data)
+			each user_log in user_data
+				div.user
+					= user_log.username
+
+				each project in projects
+					if(user_log.getHoursByProject(project.name) > 0)
+						div.project
+							= project.name
+						div.hours
+							= user_log.getHoursByProject(project.name)
+		else
+			h1 Sorry No Data Found In the database
